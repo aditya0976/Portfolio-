@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>cino__adiistudio | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #08d9d6;
+      --accent: #ffd369;
+      --bg: #181818;
+      --surface: rgba(35,35,35,0.85);
+      --glass: rgba(35,35,35,0.55);
+      --text: #f5f5f5;
+      --muted: #bbbbbb;
+      --radius: 22px;
+      --shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+      --gradient: linear-gradient(120deg, #08d9d6 0%, #ffd369 100%);
+      --hero-gradient: linear-gradient(135deg, #08d9d6 0%, #ff2e63 100%);
+      --wave1: #08d9d6;
+      --wave2: #ff2e63;
+      --wave3: #ffd369;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+    /* Custom Cursor */
+    .custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(8,217,214,0.18);
+      border: 2px solid var(--accent);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: background 0.2s, transform 0.1s, border 0.2s;
+      mix-blend-mode: lighten;
+    }
+    .custom-cursor.active {
+      background: var(--accent);
+      border: 2px solid var(--primary);
+      transform: translate(-50%, -50%) scale(1.4);
+    }
+    /* Vertical Nav */
+    .side-nav {
+      position: fixed;
+      top: 50%;
+      left: 2rem;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      z-index: 200;
+      background: var(--glass);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 1rem 0.7rem;
+      align-items: center;
+    }
+    .side-nav a {
+      color: var(--text);
+      font-size: 1.3rem;
+      transition: color 0.2s, transform 0.2s;
+      text-decoration: none;
+      padding: 0.3rem;
+      border-radius: 50%;
+    }
+    .side-nav a.active, .side-nav a:hover {
+      color: var(--accent);
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+    @media (max-width: 700px) {
+      .side-nav {
+        display: none;
+      }
+      .bottom-nav {
+        display: flex;
+      }
+    }
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: var(--glass);
+      z-index: 200;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.7rem 0;
+      box-shadow: 0 -2px 16px rgba(8,217,214,0.13);
+    }
+    .bottom-nav a {
+      color: var(--text);
+      font-size: 1.4rem;
+      transition: color 0.2s, transform 0.2s;
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+    .bottom-nav a.active, .bottom-nav a:hover {
+      color: var(--accent);
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+    /* Animated Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 4.5rem;
+      background: var(--hero-gradient);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.5;
+      animation: blobMove 12s infinite alternate ease-in-out;
+    }
+    .blob1 {
+      width: 420px; height: 420px;
+      background: var(--wave1);
+      top: 10%; left: 10%;
+      animation-delay: 0s;
+    }
+    .blob2 {
+      width: 320px; height: 320px;
+      background: var(--wave2);
+      top: 40%; left: 60%;
+      animation-delay: 2s;
+    }
+    .blob3 {
+      width: 260px; height: 260px;
+      background: var(--wave3);
+      top: 70%; left: 30%;
+      animation-delay: 4s;
+    }
+    @keyframes blobMove {
+      0% { transform: scale(1) translateY(0) translateX(0); }
+      100% { transform: scale(1.2) translateY(-40px) translateX(40px); }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3.5rem 1.2rem 2.5rem 1.2rem;
+      border-radius: var(--radius);
+      background: rgba(24,24,24,0.55);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px) saturate(1.2);
+      animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .hero h1 {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 3.2rem;
+      color: #fff;
+      font-weight: 900;
+      margin-bottom: 0.7rem;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 24px rgba(8,217,214,0.22);
+    }
+    .hero p {
+      font-size: 1.35rem;
+      color: var(--muted);
+      margin-bottom: 2.2rem;
+    }
+    .cta-btn {
+      background: var(--gradient);
+      color: var(--bg);
+      border: none;
+      border-radius: 32px;
+      padding: 1.1rem 2.7rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 16px rgba(8,217,214,0.13);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      outline: none;
+      margin-top: 0.5rem;
+    }
+    .cta-btn:hover, .cta-btn:focus {
+      background: var(--primary);
+      color: var(--bg);
+      transform: translateY(-2px) scale(1.04);
+    }
+    /* SVG Wave Divider */
+    .wave {
+      display: block;
+      width: 100%;
+      height: 80px;
+      margin-bottom: -2px;
+    }
+    /* Section Animations */
+    .card, .portfolio-item, .testimonial-card {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .card.visible, .portfolio-item.visible, .testimonial-card.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    /* About Section */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2.5rem 1.7rem;
+      margin-bottom: 2.7rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .about {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2.7rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 24px var(--accent);
+      border: 4px solid var(--primary);
+      margin-bottom: 0.7rem;
+    }
+    .about-text {
+      max-width: 480px;
+    }
+    .about strong {
+      color: var(--accent);
+    }
+    /* Services */
+    .services-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.7rem;
+      list-style: none;
+      padding: 0;
+    }
+    .service-card {
+      background: var(--glass);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(8,217,214,0.08);
+      transition: box-shadow 0.2s, transform 0.2s;
+      min-height: 170px;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card:hover {
+      box-shadow: 0 4px 24px rgba(8,217,214,0.18);
+      transform: translateY(-2px) scale(1.05) rotate(-2deg);
+      background: var(--primary);
+      color: var(--bg);
+    }
+    .service-card i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 0.7rem;
+      transition: color 0.2s;
+    }
+    .service-card:hover i {
+      color: var(--accent);
+    }
+    .service-card span {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    /* Portfolio Masonry */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      margin: 0 auto 1.5rem auto;
+      max-width: 900px;
+      justify-content: center;
+    }
+    @media (max-width: 900px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 600px;
+      }
+    }
+    @media (max-width: 600px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+      }
+    }
+    .portfolio-card {
+      background: var(--surface);
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(8,217,214,0.10), 0 1.5px 6px rgba(0,0,0,0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.2rem 1.5rem 1.2rem;
+      min-height: 340px;
+      transition: box-shadow 0.25s, transform 0.22s;
+      overflow: visible;
+    }
+    .portfolio-card:focus-within, .portfolio-card:focus, .portfolio-card:hover {
+      box-shadow: 0 8px 32px 0 rgba(8,217,214,0.18), 0 2px 12px rgba(0,0,0,0.10);
+      transform: translateY(-4px) scale(1.03);
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    .portfolio-thumb {
+      position: absolute;
+      top: -48px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(8,217,214,0.18);
+      border: 4px solid var(--bg);
+      background: #222;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .portfolio-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      display: block;
+    }
+    .portfolio-card-content {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .portfolio-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0.7rem 0 0.3rem 0;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .portfolio-desc {
+      color: var(--muted);
+      font-size: 1.01rem;
+      text-align: center;
+      margin-bottom: 1.1rem;
+      min-height: 38px;
+    }
+    .portfolio-btn {
+      background: var(--primary);
+      color: var(--bg);
+      border: none;
+      border-radius: 22px;
+      padding: 0.7rem 1.7rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(8,217,214,0.10);
+      transition: background 0.18s, color 0.18s, transform 0.15s;
+      margin-top: 0.2rem;
+      outline: none;
+    }
+    .portfolio-btn:hover, .portfolio-btn:focus {
+      background: var(--accent);
+      color: var(--bg);
+      transform: scale(1.06);
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 200;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(24,24,24,0.85);
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      max-width: 90vw;
+      max-height: 80vh;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .modal-content img, .modal-content video {
+      max-width: 70vw;
+      max-height: 60vh;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--primary);
+      color: var(--bg);
+      border: none;
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--accent); }
+    /* Testimonial Carousel */
+    .testimonial-carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 2rem 0 1rem 0;
+      position: relative;
+    }
+    .testimonial-card {
+      background: var(--glass);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(8,217,214,0.08);
+      padding: 2rem 1.5rem;
+      min-width: 320px;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      transition: box-shadow 0.2s, transform 0.2s;
+      opacity: 0.7;
+      transform: scale(0.95);
+    }
+    .testimonial-card.active {
+      opacity: 1;
+      transform: scale(1.05);
+      box-shadow: 0 4px 24px rgba(8,217,214,0.18);
+      z-index: 2;
+    }
+    .testimonial-card .quote {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .testimonial-card .author {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+    .testimonial-arrow {
+      background: var(--primary);
+      color: var(--bg);
+      border: none;
+      border-radius: 50%;
+      width: 38px; height: 38px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .testimonial-arrow:hover { background: var(--accent); }
+    /* Contact */
+    .contact-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--glass);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(8,217,214,0.08);
+      padding: 2.5rem 1.7rem;
+      gap: 1.2rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    .contact-links a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .contact-links a:hover, .contact-links a:focus {
+      color: var(--primary);
+      outline: none;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem 0 1rem 0;
+      font-size: 0.98rem;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+    .footer-socials a {
+      color: var(--primary);
+      font-size: 1.3rem;
+      transition: color 0.2s;
+    }
+    .footer-socials a:hover { color: var(--accent); }
+    @media (max-width: 900px) {
+      .about { flex-direction: column; gap: 1.2rem; }
+    }
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero-content { padding: 1.2rem 0.5rem; }
+      .testimonial-card { min-width: 220px; max-width: 90vw; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.3rem; }
+      .profile-img { width: 80px; height: 80px; }
+      .portfolio-item img, .portfolio-item video { max-width: 100%; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Centered Portfolio Section */
+    .portfolio-section-centered {
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+      background: rgba(24,24,24,0.10);
+      border-radius: 32px;
+    }
+    @media (max-width: 900px) {
+      .portfolio-section-centered {
+        max-width: 700px;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .portfolio-section-centered {
+        max-width: 98vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+    }
+    .wave-margin {
+      margin-bottom: 2.5rem;
+    }
+    #services.card {
+      margin-bottom: 2.5rem;
+    }
+    #portfolio-heading {
+      margin-top: 0;
+      margin-bottom: 2.2rem;
+      position: relative;
+      z-index: 2;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="custom-cursor" id="customCursor"></div>
+  <nav class="side-nav" aria-label="Section navigation">
+    <a href="#about" title="About"><i class="fas fa-user"></i></a>
+    <a href="#services" title="Services"><i class="fas fa-tools"></i></a>
+    <a href="#portfolio" title="Portfolio"><i class="fas fa-th-large"></i></a>
+    <a href="#testimonials" title="Testimonials"><i class="fas fa-quote-left"></i></a>
+    <a href="#contact" title="Contact"><i class="fas fa-envelope"></i></a>
+  </nav>
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="#about" title="About"><i class="fas fa-user"></i></a>
+    <a href="#services" title="Services"><i class="fas fa-tools"></i></a>
+    <a href="#portfolio" title="Portfolio"><i class="fas fa-th-large"></i></a>
+    <a href="#testimonials" title="Testimonials"><i class="fas fa-quote-left"></i></a>
+    <a href="#contact" title="Contact"><i class="fas fa-envelope"></i></a>
+  </nav>
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+      <div class="blob blob3"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Unleash Your Story<br>with <span style="color:var(--primary)">Creative Editing</span></h1>
+      <p>Transforming raw footage into captivating visual stories. For creators, brands, and dreamers who want to stand out.</p>
+      <a href="#contact" class="cta-btn">Let's Collaborate</a>
+    </div>
+    <svg class="wave" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 Q 360 80 720 40 T 1440 40 V80H0V40Z" fill="url(#waveGradient)"/><defs><linearGradient id="waveGradient" x1="0" y1="0" x2="1440" y2="80" gradientUnits="userSpaceOnUse"><stop stop-color="#08d9d6"/><stop offset="0.5" stop-color="#ff2e63"/><stop offset="1" stop-color="#ffd369"/></linearGradient></defs></svg>
+  </section>
+  <main>
+    <section id="about" class="card" aria-labelledby="about-heading">
+      <div class="about">
+        <img src="https://tavus-videos-store.s3.ap-southeast-2.amazonaws.com/IMG_0300+(1).jpg" alt="Aditya Sharma, video editor" class="profile-img" loading="lazy">
+        <div class="about-text">
+          <h2 id="about-heading">About Me</h2>
+          <p>I'm <strong>Aditya Sharma</strong>, an 11th-grade student with 3 years of paid experience in photo and video editing. I blend creativity and storytelling to deliver impactful edits for clients.</p>
+        </div>
+      </div>
+    </section>
+    <svg class="wave" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 Q 360 0 720 40 T 1440 40 V80H0V40Z" fill="url(#waveGradient)"/></svg>
+    <section id="services" class="card" aria-labelledby="services-heading">
+      <h2 id="services-heading">Services</h2>
+      <ul class="services-list">
+        <li class="service-card"><i class="fas fa-film"></i><span>Video Editing</span></li>
+        <li class="service-card"><i class="fas fa-image"></i><span>Image Editing</span></li>
+        <li class="service-card"><i class="fas fa-palette"></i><span>Colour Grading</span></li>
+        <li class="service-card"><i class="fas fa-clapperboard"></i><span>Reel Creation</span></li>
+      </ul>
+    </section>
+    <svg class="wave wave-margin" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 Q 360 80 720 40 T 1440 40 V80H0V40Z" fill="url(#waveGradient)"/></svg>
+    <section id="portfolio" class="card portfolio-section-centered" aria-labelledby="portfolio-heading">
+      <h2 id="portfolio-heading" style="text-align:center;">Portfolio</h2>
+      <div class="portfolio-grid">
+        <div class="portfolio-card" tabindex="0" aria-label="Open portfolio preview">
+          <div class="portfolio-thumb">
+            <img src="https://tavus-videos-store.s3.ap-southeast-2.amazonaws.com/IMG_0300+(1).jpg" alt="Sample edit by Aditya Sharma" loading="lazy">
+          </div>
+          <div class="portfolio-card-content">
+            <div class="portfolio-title">Sample Edit</div>
+            <div class="portfolio-desc">A dynamic video edit for a YouTube creator, focusing on storytelling and engaging transitions.</div>
+            <button class="portfolio-btn" onclick="window.open('https://youtube.com/@adityasharma-o3y?si=IS1gsCq_rJzMISsv','_blank')">View Project</button>
+          </div>
+        </div>
+        <div class="portfolio-card" tabindex="0" aria-label="Open portfolio preview">
+          <div class="portfolio-thumb">
+            <img src="https://tavus-videos-store.s3.ap-southeast-2.amazonaws.com/IMG_0300+(1).jpg" alt="Sample edit by Aditya Sharma" loading="lazy">
+          </div>
+          <div class="portfolio-card-content">
+            <div class="portfolio-title">Sample Video</div>
+            <div class="portfolio-desc">A dynamic video edit for a YouTube creator, focusing on storytelling and engaging transitions.</div>
+            <button class="portfolio-btn" onclick="window.open('https://youtube.com/@adityasharma-o3y?si=IS1gsCq_rJzMISsv','_blank')">View Project</button>
+          </div>
+        </div>
+        <div class="portfolio-card" tabindex="0" aria-label="Open portfolio preview">
+          <div class="portfolio-thumb">
+            <img src="https://tavus-videos-store.s3.ap-southeast-2.amazonaws.com/IMG_0300+(1).jpg" alt="Sample edit by Aditya Sharma" loading="lazy">
+          </div>
+          <div class="portfolio-card-content">
+            <div class="portfolio-title">Sample Reel</div>
+            <div class="portfolio-desc">A dynamic video edit for a YouTube creator, focusing on storytelling and engaging transitions.</div>
+            <button class="portfolio-btn" onclick="window.open('https://youtube.com/@adityasharma-o3y?si=IS1gsCq_rJzMISsv','_blank')">View Project</button>
+          </div>
+        </div>
+        <!-- Add more portfolio-card items as needed -->
+      </div>
+    </section>
+    <svg class="wave" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 Q 360 0 720 40 T 1440 40 V80H0V40Z" fill="url(#waveGradient)"/></svg>
+    <section id="testimonials" class="card" aria-labelledby="testimonials-heading">
+      <h2 id="testimonials-heading">Testimonials</h2>
+      <div class="testimonial-carousel" id="testimonialCarousel">
+        <button class="testimonial-arrow" onclick="prevTestimonial()" aria-label="Previous testimonial"><i class="fas fa-chevron-left"></i></button>
+        <div class="testimonial-card active">
+          <div class="quote">“Aditya's edits brought my vision to life. Fast, creative, and professional!”</div>
+          <div class="author">— Priya S., Content Creator</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote">“The best video editor I've worked with. Highly recommended for brands!”</div>
+          <div class="author">— Rahul M., Brand Manager</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote">“Amazing attention to detail and storytelling. Will hire again!”</div>
+          <div class="author">— Sneha K., Filmmaker</div>
+        </div>
+        <button class="testimonial-arrow" onclick="nextTestimonial()" aria-label="Next testimonial"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </section>
+    <svg class="wave" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 Q 360 80 720 40 T 1440 40 V80H0V40Z" fill="url(#waveGradient)"/></svg>
+    <section id="contact" class="card" aria-labelledby="contact-heading">
+      <div class="contact-card">
+        <h2 id="contact-heading">Contact</h2>
+        <div class="contact-links">
+          <a href="mailto:cinoadii08@gmail.com" aria-label="Email Aditya Sharma"><i class="fas fa-envelope"></i>cinoadii08@gmail.com</a>
+          <a href="tel:8789514903" aria-label="Call Aditya Sharma"><i class="fas fa-phone"></i>8789514903</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="modal" id="portfolioModal" tabindex="-1" aria-modal="true" role="dialog">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close preview"><i class="fas fa-times"></i></button>
+      <img id="modalImg" src="" alt="Portfolio preview"/>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-socials">
+      <a href="https://youtube.com/@adityasharma-o3y?si=IS1gsCq_rJzMISsv" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="mailto:cinoadii08@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="tel:8789514903" aria-label="Phone"><i class="fas fa-phone"></i></a>
+    </div>
+    &copy; 2025 cino__adiistudio. All rights reserved.
+  </footer>
+  <script>
+    // Custom Cursor
+    const cursor = document.getElementById('customCursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .portfolio-item').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+    });
+    // Scroll-triggered animations
+    function revealOnScroll() {
+      document.querySelectorAll('.card, .portfolio-item, .testimonial-card').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', revealOnScroll);
+    // Modal logic for portfolio preview
+    function openModal(imgSrc) {
+      document.getElementById('modalImg').src = imgSrc;
+      document.getElementById('portfolioModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('portfolioModal').classList.remove('active');
+      document.getElementById('modalImg').src = '';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+    document.getElementById('portfolioModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    // Testimonial Carousel
+    let testimonialIndex = 0;
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    function showTestimonial(idx) {
+      testimonials.forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+    }
+    function prevTestimonial() {
+      testimonialIndex = (testimonialIndex - 1 + testimonials.length) % testimonials.length;
+      showTestimonial(testimonialIndex);
+    }
+    function nextTestimonial() {
+      testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+      showTestimonial(testimonialIndex);
+    }
+    // Section nav highlight
+    function highlightNav() {
+      const sections = ['about','services','portfolio','testimonials','contact'];
+      let current = 'about';
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY + 120 >= el.offsetTop) current = id;
+      }
+      document.querySelectorAll('.side-nav a, .bottom-nav a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    }
+    window.addEventListener('scroll', highlightNav);
+    window.addEventListener('DOMContentLoaded', highlightNav);
+  </script>
+</body>
+</html>
